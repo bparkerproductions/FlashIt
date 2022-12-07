@@ -3,6 +3,7 @@ class CardSet:
   def __init__(self):
     # Create empty dictionary, this will be used to keep track of added cards
     cardSet = {}
+    print('Welcome to Flash It!')
 
     self.userChoice()
 
@@ -35,7 +36,6 @@ class CardSet:
 
   def printInstructions(self):
     print('''
-    Welcome to Flash It! 
     To add: use "add"
     To delete: use "delete"
     To update use "update"
@@ -49,6 +49,28 @@ class CardSet:
     print('Choose a card to update')
 
   def addCard(self):
-    print('Choose a card to add')
+    print('To cancel a card, type :cancel for the question or answer')
+
+    while True:
+      
+      cardQuestion = input('Choose the question for your card')
+
+      if cardQuestion == ':cancel':
+        break
+        
+      cardAnswer = input('Choose the answer for your card')
+      
+      if cardAnswer == ':cancel':
+        break
+
+      # Check if the conditions pass, if so then add the card. Else, the user needs to try again
+      if len(cardAnswer) > 0 and len(cardQuestion) > 0:
+        self.addCardToDictionary(cardQuestion, cardAnswer)
+        break
+      else:
+        print('Your question or answer cannot be empty')
+
+  def addCardToDictionary(self, question, answer):
+    print(question, answer)
 
 biology = CardSet()
