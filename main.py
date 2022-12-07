@@ -7,6 +7,7 @@ class CardSet:
 
     self.userChoice()
 
+  # This is where the user can choose what action to do. Exit, add, delete, or update
   def userChoice(self):
     while True:
       self.printInstructions()
@@ -42,22 +43,26 @@ class CardSet:
     To exit, use "exit"
     ''')
 
+  # User can delete a card based on the dictionaries index
   def deleteCard(self):
     print('Choose a card to delete')
 
+  # User can update a card based on dictionary index if it exists
   def updateCard(self):
     print('Choose a card to update')
 
+  # User can add a card or cancel the creation to go back to main prompt
   def addCard(self):
     print('To cancel a card, type :cancel for the question or answer')
 
     while True:
-      
+      # get card question
       cardQuestion = input('Choose the question for your card')
 
       if cardQuestion == ':cancel':
         break
-        
+
+      # get card answer
       cardAnswer = input('Choose the answer for your card')
       
       if cardAnswer == ':cancel':
@@ -70,6 +75,7 @@ class CardSet:
       else:
         print('Your question or answer cannot be empty')
 
+  # Add the card to the dictionary and give it a inique referable ID
   def addCardToDictionary(self, question, answer):
     print(question, answer)
 
