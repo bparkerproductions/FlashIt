@@ -4,6 +4,9 @@ class CardSet:
     # Create empty dictionary, this will be used to keep track of added cards
     cardSet = {}
 
+    self.userChoice()
+
+  def userChoice(self):
     while True:
       self.printInstructions()
       userChoice = input('What would you like to do?\n')
