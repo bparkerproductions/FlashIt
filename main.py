@@ -4,8 +4,8 @@ import random
 class CardSet:
   # A card set is a deck of study cards that will contain multiple cards. It can be reviewed and studied
   def __init__(self, cardObj=False):
-    # Create empty dictionary, this will be used to keep track of added cards
-
+    
+    # Create empty dictionary or passed in dictionary. This will be used to keep track of added cards
     if cardObj:
       self.cardSet = cardObj
     else:
@@ -15,7 +15,7 @@ class CardSet:
 
     self.userChoice()
 
-  # This is where the user can choose what action to do. Exit, add, delete, or update
+  # This is where the user can choose what action to do. Exit, quiz, add, delete, view, or update
   def userChoice(self):
     while True:
       self.printInstructions()
@@ -29,7 +29,7 @@ class CardSet:
 
         if len(self.cardSet) >= 2:
           # Create quiz instance and start the interactive quizzer
-          quiz = Quizzer(self.cardSet)
+          Quizzer(self.cardSet)
         else:
           print('You need at least 2 cards to be able to quiz yourself')
 
