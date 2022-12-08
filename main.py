@@ -58,8 +58,31 @@ class CardSet:
 
   # User can update a card based on dictionary index if it exists
   def updateCard(self):
-    print('Choose a card to update')
 
+    while True:
+      self.viewCards()
+      cardToUpdate = input('Enter the card ID to update it\n')
+
+      if(self.checkForCard(cardToUpdate)):
+
+        # Prompt question
+        print('\nCurrent Question: ' + self.cardSet[cardToUpdate]['question'])
+        newQuestion = input('What is your new question? Press enter to leave it as is.\n')
+
+        if(len(newQuestion) == 0):
+          newQuestion = self.cardSet[cardToUpdate]['question']
+
+        # Prompt Answer
+        print('\nCurrent Answer: ' + self.cardSet[cardToUpdate]['answer'])
+        newAnswer = input('What is your new answer? Press enter to leave it as is.\n')
+
+        if(len(newAnswer) == 0):
+          newAnswer = self.cardSet[cardToUpdate]['answer']
+
+        print(newQuestion, newAnswer)
+      else:
+        print('Card with this ID does not exist\n')
+    
   # User can add a card or cancel the creation to go back to main prompt
   def addCard(self):
     print('To cancel a card, type :cancel for the question or answer')
@@ -93,6 +116,14 @@ class CardSet:
     }
 
     print('Card added!')
+
+  # Check if a card with a given ID exists in the dictionary
+  def checkForCard(self, cardId):
+    for key in self.cardSet:
+      if key == cardId:
+        return True
+
+    return False
 
   # Loop through all cards and display their attributes
   def viewCards(self):
