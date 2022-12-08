@@ -17,6 +17,9 @@ class CardSet:
         print('Good bye')
         break
 
+      elif userChoice == 'view':
+        self.viewCards()
+
       elif userChoice == 'add':
         self.addCard()
         
@@ -37,10 +40,11 @@ class CardSet:
 
   def printInstructions(self):
     print('''
-    To add: use "add"
-    To delete: use "delete"
-    To update use "update"
-    To exit, use "exit"
+  To add: use "add"
+  To view all cards: use "view"
+  To delete: use "delete"
+  To update use "update"
+  To exit, use "exit"
     ''')
 
   # User can delete a card based on the dictionaries index
@@ -57,13 +61,13 @@ class CardSet:
 
     while True:
       # get card question
-      cardQuestion = input('Choose the question for your card')
+      cardQuestion = input('\nChoose the question for your card\n')
 
       if cardQuestion == ':cancel':
         break
 
       # get card answer
-      cardAnswer = input('Choose the answer for your card')
+      cardAnswer = input('Choose the answer for your card\n')
       
       if cardAnswer == ':cancel':
         break
@@ -73,7 +77,7 @@ class CardSet:
         self.addCardToDictionary(cardQuestion, cardAnswer)
         break
       else:
-        print('Your question or answer cannot be empty')
+        print('\nYour question or answer cannot be empty')
 
   # Add the card to the dictionary and give it a inique referable ID
   def addCardToDictionary(self, question, answer):
@@ -84,5 +88,16 @@ class CardSet:
     }
 
     print('Card added!')
+
+  # Loop through all cards and display their attributes
+  def viewCards(self):
+    if len(self.cardSet) > 0:
+      print('''\nYour Cards:\n---------------''')
+
+      # Loop through each card
+      for key, value in self.cardSet.items():
+        print('''CardId: {}\nQuestion: {}\nAnswer: {} \n-------------'''.format(key, value['question'], value['answer']))
+    else:
+      print('\nThere are no cards to view')
 
 biology = CardSet()
