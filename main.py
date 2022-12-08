@@ -1,3 +1,5 @@
+import uuid
+
 class CardSet:
   # A card set is a deck of study cards that will contain multiple cards. It can be reviewed and studied
   def __init__(self, cardObj=False):
@@ -29,7 +31,7 @@ class CardSet:
         self.addCard()
         
       elif userChoice == 'delete':
-        if len(cardSet) == 0:
+        if len(self.cardSet) == 0:
           print('There are no cards to delete')
         else:
           self.deleteCard()
@@ -54,7 +56,20 @@ class CardSet:
 
   # User can delete a card based on the dictionaries index
   def deleteCard(self):
-    print('Choose a card to delete')
+    while True:
+      self.viewCards()
+      cardToDelete = input('Enter the card ID to delete it. Type :cancel to cancel\n')
+
+      if cardToDelete == ':cancel':
+        break
+
+      elif(self.checkForCard(cardToDelete)):
+        del self.cardSet[cardToDelete]
+        print('\nCard Deleted!\n')
+        break
+    
+      else:
+        print('\nCard with this ID does not exist\n')
 
   # User can update a card based on dictionary index if it exists
   def updateCard(self):
@@ -90,7 +105,7 @@ class CardSet:
         
       else:
         print('\nCard with this ID does not exist\n')
-    
+
   # User can add a card or cancel the creation to go back to main prompt
   def addCard(self):
     print('To cancel a card, type :cancel for the question or answer')
@@ -117,7 +132,7 @@ class CardSet:
 
   # Add the card to the dictionary and give it a inique referable ID
   def addCardToDictionary(self, question, answer):
-    cardId = 'card' + str(len(self.cardSet)+1)
+    cardId = 'card-' + uuid.uuid4().hex[:4]
     self.cardSet[cardId] = {
       'question': question,
       'answer': answer
