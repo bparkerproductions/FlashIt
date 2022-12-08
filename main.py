@@ -2,7 +2,7 @@ class CardSet:
   # A card set is a deck of study cards that will contain multiple cards. It can be reviewed and studied
   def __init__(self):
     # Create empty dictionary, this will be used to keep track of added cards
-    cardSet = {}
+    self.cardSet = {}
     print('Welcome to Flash It!')
 
     self.userChoice()
@@ -77,6 +77,12 @@ class CardSet:
 
   # Add the card to the dictionary and give it a inique referable ID
   def addCardToDictionary(self, question, answer):
-    print(question, answer)
+    cardId = 'card' + str(len(self.cardSet)+1)
+    self.cardSet[cardId] = {
+      'question': question,
+      'answer': answer
+    }
+
+    print('Card added!')
 
 biology = CardSet()
