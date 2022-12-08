@@ -1,8 +1,13 @@
 class CardSet:
   # A card set is a deck of study cards that will contain multiple cards. It can be reviewed and studied
-  def __init__(self):
+  def __init__(self, cardObj=False):
     # Create empty dictionary, this will be used to keep track of added cards
-    self.cardSet = {}
+
+    if cardObj:
+      self.cardSet = cardObj
+    else:
+      self.cardSet = {}
+    
     print('Welcome to Flash It!')
 
     self.userChoice()
@@ -30,7 +35,7 @@ class CardSet:
           self.deleteCard()
 
       elif userChoice == 'update':
-        if len(cardSet) == 0:
+        if len(self.cardSet) == 0:
           print('There are no cards to update')
         else:
           self.updateCard()
@@ -96,8 +101,20 @@ class CardSet:
 
       # Loop through each card
       for key, value in self.cardSet.items():
-        print('''CardId: {}\nQuestion: {}\nAnswer: {} \n-------------'''.format(key, value['question'], value['answer']))
+        print('''CardId: {}\nQuestion: {}\nAnswer: {} \n'''.format(key, value['question'], value['answer']))
     else:
       print('\nThere are no cards to view')
 
-biology = CardSet()
+# Pass in initial data for testing, but also just to have default options for the user
+biologyData = {
+  'card1': {
+    'question': 'What is the powerhouse of the cell?',
+    'answer': 'Mitochondria'
+  },
+  'card2': {
+    'question': 'What is the nucleus?',
+    'answer': 'A nucleus, as related to genomics, is the membrane-enclosed organelle within a cell that contains the chromosomes. An array of holes, or pores, in the nuclear membrane allows for the selective passage of certain molecules (such as proteins and nucleic acids) into and out of the nucleus.'
+  }
+}
+
+biology = CardSet(biologyData)
