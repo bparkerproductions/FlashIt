@@ -1,4 +1,5 @@
 import uuid
+import random
 
 class CardSet:
   # A card set is a deck of study cards that will contain multiple cards. It can be reviewed and studied
@@ -23,6 +24,14 @@ class CardSet:
       if userChoice == 'exit':
         print('Good bye')
         break
+
+      elif userChoice == 'quiz':
+
+        if len(self.cardSet) >= 2:
+          # Create quiz instance and start the interactive quizzer
+          quiz = Quizzer(self.cardSet)
+        else:
+          print('You need at least 2 cards to be able to quiz yourself')
 
       elif userChoice == 'view':
         self.viewCards()
@@ -51,6 +60,7 @@ class CardSet:
   To view all cards: use "view"
   To delete: use "delete"
   To update use "update"
+  To quiz yourself type "quiz"
   To exit, use "exit"
     ''')
 
@@ -159,6 +169,54 @@ class CardSet:
     else:
       print('\nThere are no cards to view')
 
+# The Quizzer class is for quizzing the user for existing flash cards
+class Quizzer(CardSet):
+  def __init__(self, cardSet):
+    print('Welcome to quizzer! Here you can test our knowledge and go through the flashcards you made. You can exit anytime by typing :cancel')
+    self.cardSet = cardSet
+    self.chooseQuizMode()
+  
+  def chooseQuizMode(self):
+    
+    while True:
+      userChoice = input('Would you like to shuffle cards or do them in order? (type shuffle or order)\n')
+
+      if userChoice == ':cancel':
+        break
+      elif userChoice == 'shuffle':
+        self.shuffleQuiz()
+        break
+      elif userChoice == 'order':
+        self.orderQuiz()
+        break
+      else:
+        print('That option was not recognized, please try again')
+
+  # A quiz method that tests the user in random order
+  def shuffleQuiz(self):
+    randomCardSet=list(self.cardSet.keys())
+    random.shuffle(randomCardSet)
+    self.cardQuiz(randomCardSet)
+
+  # A quiz method that tests the user in sequential order
+  def orderQuiz(self):
+    self.cardQuiz(self.cardSet)
+
+  # The actual quizzing logic/prompts. The order quiz and shuffle quiz utilize this logic
+  def cardQuiz(self, cardList): 
+    print('To cancel the quizzing, just type :cancel')
+    
+    for card in cardList:
+      print('\nQuestion:' + self.cardSet[card]['question'])
+      answer = input('What is your answer?\n')
+
+      if answer == ':cancel':
+        break
+      elif answer.lower() == self.cardSet[card]['answer'].lower():
+        print('Good job! Your answer is correct.')
+      else:
+        print('Not quite, the answer is ' + self.cardSet[card]['answer'])
+
 # Pass in initial data for testing, but also just to have default options for the user
 biologyData = {
   'card1': {
@@ -168,7 +226,16 @@ biologyData = {
   'card2': {
     'question': 'What is the nucleus?',
     'answer': 'A nucleus, as related to genomics, is the membrane-enclosed organelle within a cell that contains the chromosomes. An array of holes, or pores, in the nuclear membrane allows for the selective passage of certain molecules (such as proteins and nucleic acids) into and out of the nucleus.'
+  },
+  'card3': {
+    'question': 'A term used to describe a large, diverse group of eukaryotic, photosynthetic organisms.',
+    'answer': 'Algae'
+  },
+  'card4': {
+    'question': 'Collectively refers to all the processes of chemical reactions that build larger molecules out of smaller molecules or atoms;',
+    'answer': 'Anabolism'
   }
 }
 
+# Initialize first CardSet and pass in test data
 biology = CardSet(biologyData)
