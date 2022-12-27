@@ -140,7 +140,7 @@ class CardSet:
         self.addCardToDictionary(cardQuestion, cardAnswer)
         break
       else:
-        print('\nYour question or answer cannot be empty')
+        print('\n' + self.styledMessage('Your question or answer cannot be empty', '!', 1))
 
   # Add the card to the dictionary and give it a inique referable ID
   def addCardToDictionary(self, question, answer):
@@ -150,7 +150,7 @@ class CardSet:
       'answer': answer
     }
 
-    print('Card added!')
+    print(self.styledMessage('Card added!', '='))
 
   # Check if a card with a given ID exists in the dictionary
   def checkForCard(self, cardId):
@@ -162,14 +162,22 @@ class CardSet:
 
   # Loop through all cards and display their attributes
   def viewCards(self):
+    printFormat = '''
+-----------------------------------\n
+CardId: {}
+Question: {}
+Answer: {} \n 
+-----------------------------------
+    '''
+
     if len(self.cardSet) > 0:
-      print('''\nYour Cards:\n---------------''')
+      print(self.styledMessage('Your Cards:', '-'))
 
       # Loop through each card
       for key, value in self.cardSet.items():
-        print('''CardId: {}\nQuestion: {}\nAnswer: {} \n'''.format(key, value['question'], value['answer']))
+        print(printFormat.format(key, value['question'], value['answer']))
     else:
-      print('\nThere are no cards to view')
+      print('\n' + self.styledMessage('There are no cards to view', '!'))
 
   # Take a boring instructional prompt and give it a specified border and spacing
   def styledMessage(self, message, style='*', spaces=0):
