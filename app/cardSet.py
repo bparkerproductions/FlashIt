@@ -119,36 +119,18 @@ class CardSet:
 
   # User can add a card or cancel the creation to go back to main prompt
   def addCard(self):
-    cancelMessage = self.styledMessage('''
-**************************************
-|   To cancel a card, type :cancel   |
-|   for the question or answer       |
-**************************************
-''')
 
-    questionPromptText = self.styledMessage('''
-*****************************************
-|   Choose the question for your card:  |
-*****************************************
-  ''')
-
-    answerPromptText = self.styledMessage('''
-***************************************
-|   Choose the answer for your card   |
-***************************************
-  ''')
-
-    print(cancelMessage)
+    print(self.styledMessage('To cancel a card, type :cancel for the question or answer'))
 
     while True:
       # get card question
-      cardQuestion = input(questionPromptText)
+      cardQuestion = input('\n' + self.styledMessage('Choose the question for your card:', '-') + '\n')
 
       if cardQuestion == ':cancel':
         break
 
       # get card answer
-      cardAnswer = input(answerPromptText)
+      cardAnswer = input(self.styledMessage('Choose the answer for your card:', '-') + '\n')
       
       if cardAnswer == ':cancel':
         break
