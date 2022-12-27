@@ -88,7 +88,7 @@ class CardSet:
     self.viewCards()
 
     while True:
-      cardToUpdate = input('Enter the card ID to update it. Type :cancel to cancel\n')
+      cardToUpdate = input(self.styledMessage('Enter the card ID to update it. Type :cancel to cancel') + '\n')
 
       if cardToUpdate == ':cancel':
         break
@@ -97,14 +97,14 @@ class CardSet:
 
         # Prompt question
         print('\nCurrent Question: ' + self.cardSet[cardToUpdate]['question'])
-        newQuestion = input('What is your new question? Enter nothing to leave it as is.\n')
+        newQuestion = input(self.styledMessage('What is your new question? Enter nothing to leave it as is.', '-') + '\n')
 
         if(len(newQuestion) == 0):
           newQuestion = self.cardSet[cardToUpdate]['question']
 
         # Prompt Answer
         print('\nCurrent Answer: ' + self.cardSet[cardToUpdate]['answer'])
-        newAnswer = input('What is your new answer? Enter nothing to leave it as is.\n')
+        newAnswer = input(self.styledMessage('What is your new answer? Enter nothing to leave it as is.', '-') + '\n')
 
         if(len(newAnswer) == 0):
           newAnswer = self.cardSet[cardToUpdate]['answer']
@@ -112,11 +112,11 @@ class CardSet:
         # Update the dictionary with the new values
         self.cardSet[cardToUpdate]['question'] = newQuestion
         self.cardSet[cardToUpdate]['answer'] = newAnswer
-        print('\nCard Updated!')
+        print('\n' + self.styledMessage('Card Updated!', '='))
         break
         
       else:
-        print('\nCard with this ID does not exist\n')
+        print('\n' + self.styledMessage('Card with this ID does not exist', '!') + '\n')
 
   # User can add a card or cancel the creation to go back to main prompt
   def addCard(self):
@@ -181,7 +181,7 @@ Answer: {} \n
       print('\n' + self.styledMessage('There are no cards to view', '!'))
 
   # Take a boring instructional prompt and give it a specified border and spacing
-  def styledMessage(self, message, style='*', spaces=0):
+  def styledMessage(self, message, style='*', spaces=1):
     finalMessage = ''
     finalMessage += style * (len(message) + 8)
     if spaces:
