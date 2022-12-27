@@ -1,3 +1,5 @@
+import random
+
 # The Quizzer class is for quizzing the user for existing flash cards
 class Quizzer(CardSet):
   def __init__(self, cardSet):

@@ -1,6 +1,3 @@
-import uuid
-import random
-
 exec(open('./app/cardSet.py').read())
 
 exec(open('./app/quizzer.py').read())

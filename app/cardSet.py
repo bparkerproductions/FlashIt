@@ -1,3 +1,5 @@
+import uuid
+
 class CardSet:
   # A card set is a deck of study cards that will contain multiple cards. It can be reviewed and studied
   def __init__(self, cardObj=False):
@@ -8,7 +10,7 @@ class CardSet:
     else:
       self.cardSet = {}
     
-    print('Welcome to Flash It!')
+    print(self.styledMessage('Welcome to Flash It!', '#', 2))
 
     self.userChoice()
 
@@ -53,12 +55,14 @@ class CardSet:
 
   def printInstructions(self):
     print('''
-  To add: use "add"
-  To view all cards: use "view"
-  To delete: use "delete"
-  To update use "update"
-  To quiz yourself type "quiz"
-  To exit, use "exit"
+  ----------------------------------
+  |  To add: use "add"             |
+  |  To view all cards: use "view" |
+  |  To delete: use "delete"       |
+  |  To update use "update"        |
+  |  To quiz yourself type "quiz"  |
+  |  To exit, use "exit"           |
+  ----------------------------------
     ''')
 
   # User can delete a card based on the dictionaries index
@@ -115,17 +119,36 @@ class CardSet:
 
   # User can add a card or cancel the creation to go back to main prompt
   def addCard(self):
-    print('To cancel a card, type :cancel for the question or answer')
+    cancelMessage = self.styledMessage('''
+**************************************
+|   To cancel a card, type :cancel   |
+|   for the question or answer       |
+**************************************
+''')
+
+    questionPromptText = self.styledMessage('''
+*****************************************
+|   Choose the question for your card:  |
+*****************************************
+  ''')
+
+    answerPromptText = self.styledMessage('''
+***************************************
+|   Choose the answer for your card   |
+***************************************
+  ''')
+
+    print(cancelMessage)
 
     while True:
       # get card question
-      cardQuestion = input('\nChoose the question for your card\n')
+      cardQuestion = input(questionPromptText)
 
       if cardQuestion == ':cancel':
         break
 
       # get card answer
-      cardAnswer = input('Choose the answer for your card\n')
+      cardAnswer = input(answerPromptText)
       
       if cardAnswer == ':cancel':
         break
@@ -165,3 +188,18 @@ class CardSet:
         print('''CardId: {}\nQuestion: {}\nAnswer: {} \n'''.format(key, value['question'], value['answer']))
     else:
       print('\nThere are no cards to view')
+
+  # Take a boring instructional prompt and give it a specified border and spacing
+  def styledMessage(self, message, style='*', spaces=0):
+    finalMessage = ''
+    finalMessage += style * (len(message) + 8)
+    if spaces:
+      finalMessage += ('\n|   ' + len(message) * ' ' + '   |') * spaces
+
+    finalMessage += '\n|   ' + message + '   |\n'
+
+    if spaces:
+      finalMessage += ('|   ' + len(message) * ' ' + '   |\n') * spaces
+
+    finalMessage += style * (len(message) + 8)
+    return finalMessage
