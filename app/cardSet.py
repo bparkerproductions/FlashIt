@@ -21,7 +21,7 @@ class CardSet:
       userChoice = input('What would you like to do?\n')
 
       if userChoice == 'exit':
-        print('Good bye')
+        print(self.styledMessage('Good bye'))
         break
 
       elif userChoice == 'quiz':
@@ -30,7 +30,7 @@ class CardSet:
           # Create quiz instance and start the interactive quizzer
           Quizzer(self.cardSet)
         else:
-          print('You need at least 2 cards to be able to quiz yourself')
+          print(self.styledMessage('You need at least 2 cards to be able to quiz yourself', '!'))
 
       elif userChoice == 'view':
         self.viewCards()
@@ -40,53 +40,54 @@ class CardSet:
         
       elif userChoice == 'delete':
         if len(self.cardSet) == 0:
-          print('There are no cards to delete')
+          print(self.styledMessage('There are no cards to delete', '!'))
         else:
           self.deleteCard()
 
       elif userChoice == 'update':
         if len(self.cardSet) == 0:
-          print('There are no cards to update')
+          print(self.styledMessage('There are no cards to update', '!'))
         else:
           self.updateCard()
           
       else:
-        print('This command is not recognized, please try again')
+        print(self.styledMessage('This command is not recognized, please try again', '!'))
 
   def printInstructions(self):
     print('''
-  ----------------------------------
-  |  To add: use "add"             |
-  |  To view all cards: use "view" |
-  |  To delete: use "delete"       |
-  |  To update use "update"        |
-  |  To quiz yourself type "quiz"  |
-  |  To exit, use "exit"           |
-  ----------------------------------
+----------------------------------
+|  To add: use "add"             |
+|  To view all cards: use "view" |
+|  To delete: use "delete"       |
+|  To update use "update"        |
+|  To quiz yourself type "quiz"  |
+|  To exit, use "exit"           |
+----------------------------------
     ''')
 
   # User can delete a card based on the dictionaries index
   def deleteCard(self):
+    self.viewCards()
+    
     while True:
-      self.viewCards()
-      cardToDelete = input('Enter the card ID to delete it. Type :cancel to cancel\n')
+      cardToDelete = input(self.styledMessage('Enter the card ID to delete it. Type :cancel to cancel', '-') + '\n')
 
       if cardToDelete == ':cancel':
         break
 
       elif(self.checkForCard(cardToDelete)):
         del self.cardSet[cardToDelete]
-        print('\nCard Deleted!\n')
+        print('\n' + self.styledMessage('Card Deleted!', '=') + '\n')
         break
     
       else:
-        print('\nCard with this ID does not exist\n')
+        print('\n' + self.styledMessage('Card with this ID does not exist', '!') + '\n')
 
   # User can update a card based on dictionary index if it exists
   def updateCard(self):
+    self.viewCards()
 
     while True:
-      self.viewCards()
       cardToUpdate = input('Enter the card ID to update it. Type :cancel to cancel\n')
 
       if cardToUpdate == ':cancel':
